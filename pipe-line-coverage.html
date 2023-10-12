@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Pipe Line Coverage</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS v5.2.1 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <header>
+    <!-- place navbar here -->
+  </header>
+  <main>
+    <div class="container">
+        <div class="card p-3 shadow mt-3">
+            <div class="body">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4">
+                        <div class="mb-3">
+                            <label for="total_value_pipe">$ Total Value of Opportunities in the Pipeline</label>
+                            <input type="text" class="form-control" id="total_value_pipe" placeholder="Total value of pipeline...">
+                        </div>
+                        <div class="mb-3">
+                            <label for="sales_target">$ Sales Target</label>
+                            <input type="text" class="form-control" id="sales_target" placeholder="Sales target">
+                        </div>
+                        <div class="mb-3">
+                            <label for="win_rate">Win Rate %</label>
+                            <input type="text" class="form-control" id="win_rate" placeholder="Win rate %">
+                        </div>
+        
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-8 ">
+                        <div class="jumbotron">
+                            <h2  class="display-3">Sales Pipeline Coverage</h2>
+                            <h3 id="result"  class="fw-bold"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </main>
+  <footer>
+    <!-- place footer here -->
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script>
+      $(document).ready(function () {
+          $('#total_value_pipe, #sales_target, #win_rate').on('input', function () {
+              var total_value_pipe = parseFloat($('#total_value_pipe').val());
+              var sales_target = parseFloat($('#sales_target').val());
+              var win_rate = parseFloat($('#win_rate').val()) / 100; // Convert percentage to decimal
+
+              if (win_rate < 0 || win_rate > 1) {
+                alert("Win Rate should be > 0 and <= 100%");
+                return; // Exit the function
+            }else {
+                var pipe_coverage = (total_value_pipe * win_rate) / sales_target;
+              var x = (sales_target) * (pipe_coverage / win_rate) - total_value_pipe;
+
+              var resultElement = $('#result');
+              resultElement.html(pipe_coverage.toFixed(2) + 'x');
+
+              if (pipe_coverage >= 3.0) {
+                  resultElement.addClass('text-success').removeClass('text-danger');
+                  resultElement.append('<p>Your sales pipeline coverage is healthy.</p>');
+              } else {
+                  resultElement.addClass('text-danger').removeClass('text-success');
+                  resultElement.append('<p>Add $x to your pipeline to achieve 3.0x pipeline coverage</p>');
+              }
+
+            }
+
+               
+              
+          });
+      });
+  </script>
+
+  <!-- Bootstrap JavaScript Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+    integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz" crossorigin="anonymous">
+  </script>
+</body>
+
+</html>
